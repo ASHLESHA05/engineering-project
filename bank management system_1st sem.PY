@@ -1,7 +1,9 @@
  #bank management system using python
 import os
+import datetime
 from random import *
 import smtplib
+from tkinter import *
 server=smtplib.SMTP('smtp.gmail.com',587)
 server.starttls()
 server.login('pythondemo3@gmail.com','biuvzvtiqlnczffp ')
@@ -154,7 +156,7 @@ def UPI():
             
             print("logged in \n")
             def new():
-             print("enter\n1.create upi id and set upi pin\n2.transfer amount\n3.withdraw money\n4.exit")
+             print("enter\n1.create upi id and set upi pin\n2.transfer amount\n3.withdraw money\n4.my balence\n5.exit")
              choise=int(input())
              if(choise==1):
     
@@ -175,7 +177,7 @@ def UPI():
                          upi1=input("re_enter pin ")
                          if(UPI.upipin==upi1):
                             f=open(i+".txt","a")
-                            f.writelines(UPI.upipin)
+                            f.write(UPI.upipin)
                             
                             server.sendmail('pythondemo3@gmail.com',r3[7],'your upi pin set successfully \n')
                             print('$$ successful $$')
@@ -261,13 +263,14 @@ def UPI():
                     if v==3:
                         new()
                     tr()
-               tr()    
+               tr() 
+               
              elif choise==3 :
                  price=int(input("enter amount needed to withdraw "))
                  pin=input("enter UPI pin\n")
                  
                  if(pin==r3[10]):
-                        if(r3[4]>price):
+                        if(int(r3[4])>price):
                          #ADD SUBTRACTION OF  MONEY
                          print(" success ful ")
                          server.sendmail('pythondemo3@gmail.com',r3[7],str(price)+" rupees has been debited from your account\n your xurrent bal "+str(r3[4]))
@@ -281,7 +284,39 @@ def UPI():
                  else:
                     print("invalid pin")   
                     UPI()
+                    
              elif(choise==4):
+                root=Tk()
+                root.geometry("300x300")
+                def bal():
+               
+                 def balence():
+                    str1=Text.get()
+                    if(str1==r3[10]):
+                        #create new window
+                        wind=Tk()
+                        wind.geometry("300x300")
+                        wind.config(bg="cyan")
+                        M=Label(wind,text="your account balence is:  "+r3[4]+" rupees",fg="red")
+                        M.pack()
+                        wind.mainloop()
+
+                    else:
+                        Text.delete(0,END) 
+                        Text.insert(0,"wrong pin")
+                        datetime.sleep(2)
+                        bal()
+                        
+
+                 MyL=Label(root,text="Enter your UPI PIN")
+                 MyL.pack()
+                 Text=Entry(root,width="20")
+                 Text.pack()
+                 B=Button(root,text="click",command=balence) 
+                 B.pack()
+                 root.mainloop()
+                bal()       
+             elif(choise==5):
                 choose()        
             new()  
        print(" wrong id or adhar")    
@@ -310,6 +345,7 @@ def gp():
                 
                
                 print("green pin set succesffully$$")
+
                 choose()
             else:
                 print("wrong otp RETRY ")
@@ -325,15 +361,12 @@ def n_ac():
         f1=open("text_f1.txt","r")
         r=f1.read()
         r2=r.split("\n")
-        print("bank has ",len(r2)-1," accounts")
+        print("\nbank has ",len(r2)-1," accounts\n")
+        datetime.sleep(2)
     else:
         print("wrong password!!!")
     choose()
-def totalamount():
-    count=0
-    for i in A_C_DATABASE.keys:
-        count+=int(A_C_DATABASE[i][4])
-    print(count)
+
 def close_ac():
     val=input("enter your account number ")
     f=open(val+".txt","r")
@@ -354,7 +387,7 @@ def close_ac():
         UPI()
 
 def choose():   
- print("enter the choise\n1.create account\n2.CREATE UPI ID AND PASSWORD\n3.banking transaction\n4.set green pin\n5.number of accounts in bank\n6.total amount\n7.close account\n8. exit") 
+ print("enter the choise\n1.create account\n2.CREATE UPI ID AND PASSWORD\n3.banking transaction\n4.set green pin\n5.number of accounts in bank\n6.close account\n7. exit") 
  choice=int(input())
  if(choice==1):
     account()  
@@ -366,12 +399,11 @@ def choose():
     gp()   
  elif(choice==5):
     n_ac()    
- elif choice==6:
-    totalamount()
- elif(choice==7):
+
+ elif(choice==6):
     close_ac()
- elif(choice==8):
-    f=open("11231.txt","r")
+ elif(choice==7):
+    f=open("99412.txt","r")
     print(f.read())
     print("\n**************BANK MANAGEMENT SYSTEM******************\n")
     print("\t\tby: ASHLESHA ,DHRUVA ,ARUN")
