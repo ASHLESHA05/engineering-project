@@ -1,6 +1,6 @@
  #bank management system using python
 import os
-import datetime
+import time
 from random import *
 import smtplib
 from tkinter import *
@@ -41,9 +41,9 @@ def account():
                     p.remove(i)
                     return(acnum())
                 else:
-                    f=open(str(p[len(p)-1])+".txt","x")
+                    f=open(str(p[len(p)-1]),"x")
                     f1=open("text_f1.txt","a")
-                    f1.writelines(str(p[len(p)-1])+"\n")
+                    f1.writelines(str(p[len(p)-1])+".txt\n")
                     
                     print("your account number is ",p[len(p)-1])
                     break;  
@@ -146,11 +146,13 @@ def UPI():
        f1=open("text_f1.txt","r")
        r=f1.read()
        r1=r.split("\n")
+       print(r1)
        for i in r1:
          print(i)
-         f=open(i+".txt","r")
+         f=open(i+"txt","r")
          r2=f.read()
-         r3=r2.split("\n") 
+         r3=r2.split("\n")
+         print(r3) 
          if(r3[7]==UPI.usr_id and r3[8]==PAS_1):
            #*************************************************88
             
@@ -215,7 +217,8 @@ def UPI():
                          while k<=3:
                             f.writelines(r3[k]+"\n")
                             k+=1
-                         f.writelines(str(int(r3[4])-price)) 
+                         f.writelines(str(int(r3[4])-price))
+                         k+=1 
                          while k<=10: 
                             f.writelines(r3[k]+"\n")
                             k+=1
@@ -235,6 +238,7 @@ def UPI():
                                f.writelines(r3[k]+"\n")
                                k+=1
                               f.writelines(str(int(r3[4])+price)) 
+                              k+=1
                               while k<=10: 
                                f.writelines(r3[k]+"\n")
                                k+=1
@@ -271,7 +275,18 @@ def UPI():
                  
                  if(pin==r3[10]):
                         if(int(r3[4])>price):
-                         #ADD SUBTRACTION OF  MONEY
+                         f=open(i+".txt","w")
+                         f.write(r3[0]+"\n")   
+                         k=1
+                         f=open(i+".txt","a")
+                         while k<=3:
+                            f.writelines(r[k]+"\n")
+                            k+=1
+                         
+                         f.writelines(str(int(r3[4])-price))
+                         k+=1
+                         while k<=10:
+                            f.writelines(r3[k])   
                          print(" success ful ")
                          server.sendmail('pythondemo3@gmail.com',r3[7],str(price)+" rupees has been debited from your account\n your xurrent bal "+str(r3[4]))
                          new()
@@ -304,8 +319,8 @@ def UPI():
                     else:
                         Text.delete(0,END) 
                         Text.insert(0,"wrong pin")
-                        datetime.sleep(2)
-                        bal()
+                        time.sleep(2)
+                        
                         
 
                  MyL=Label(root,text="Enter your UPI PIN")
@@ -362,7 +377,7 @@ def n_ac():
         r=f1.read()
         r2=r.split("\n")
         print("\nbank has ",len(r2)-1," accounts\n")
-        datetime.sleep(2)
+        time.sleep(2)
     else:
         print("wrong password!!!")
     choose()
