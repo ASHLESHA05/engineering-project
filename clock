@@ -1,0 +1,13 @@
+from tkinter import*
+from tkinter.ttk import*
+from time import strftime
+root=Tk()
+root.geometry("300x300")
+def TmiE():
+    current_time=strftime("%H:%M:%S  hrs")
+    l.config(text=current_time)
+    l.after(1000,TmiE)
+l=Label(root,font=("calibri",45,"bold"))
+l.pack(anchor='center') 
+TmiE()
+mainloop()   
